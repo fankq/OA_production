@@ -95,3 +95,16 @@ comment on column notice_inf.title is '通告标题';
 comment on column notice_inf.context is '通告内容';
 comment on column notice_inf.create_date is '发布日期';
 comment on column notice_inf.user_id is '发布人';
+
+--创建文档信息表
+create table document_inf(
+  id number(11) not null PRIMARY key,
+  title varchar2(50) not null ,
+  filename varchar2(300) default null,
+  remark varchar2(300) not null,
+  create_date TIMESTAMP default sysdate not null ,
+  user_id number(11) DEFAULT  null,
+  constraint fk_document_user_id foreign key
+  (user_id) REFERENCES user_inf(id)
+)
+comment on table document_inf is '文档信息表';
