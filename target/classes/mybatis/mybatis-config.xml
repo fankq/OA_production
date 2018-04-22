@@ -23,7 +23,7 @@
     </settings>
     &lt;!&ndash; 设置类的别名 &ndash;&gt;
     <typeAliases>
-        &lt;!&ndash; <typeAlias alias="User" type="com.wu.pojo.User"/> &ndash;&gt;
+        &lt;!&ndash; <typeAlias alias="ser" type="com.wu.pojo.User"/> &ndash;&gt;
         &lt;!&ndash; 根据包取别名，把包下面的所有类都按类名来取别名 &ndash;&gt;
         &lt;!&ndash; 这用可以简化代码量 &ndash;&gt;
         <package name="com.wu.pojo"/>

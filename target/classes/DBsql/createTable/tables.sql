@@ -9,6 +9,11 @@ COMMENT ON TABLE DEPT_INF IS '部门信息表';
 comment on column dept_inf.id is 'id(主键)';
 comment on column dept_inf.name is '部门名称';
 comment on column dept_inf.REMARK is '备注';
+--创建职位信息表主键序列
+create sequence sq_dept_inf_id
+increment by 1
+start with 1
+maxvalue 9999999;
 
 --创建职位信息表
 create table job_inf 
@@ -21,6 +26,12 @@ COMMENT ON TABLE job_inf IS '职位信息表';
 comment on column job_inf.id is 'id(主键)';
 comment on column job_inf.name is '职位名称';
 comment on column job_inf.REMARK is '备注';
+--创建职位信息表主键序列
+create sequence sq_job_inf_id
+increment by 1
+start with 1
+maxvalue 9999999;
+
 
 --创建用户信息表
 create table user_inf
@@ -39,6 +50,11 @@ comment on column user_inf.password is '登录密码';
 comment on column user_inf.status is '用户状态';
 comment on column user_inf.createDate is '创建日期';
 comment on column user_inf.username is '用户名称';
+--创建用户信息表主键序列
+create sequence sq_user_inf_id
+increment by 1
+start with 1
+maxvalue 9999999;
 
 --创建员工信息表
 create table employee_inf(
@@ -77,6 +93,12 @@ comment on column employee_inf.hobby is '爱好';
 comment on column employee_inf.speciality is '专业';
 comment on column employee_inf.remark is 'remark';
 comment on column employee_inf.create_date is '创建日期';
+--创建员工信息表主键序列
+  create sequence sq_employee_inf_id
+  increment by 1
+  start with 1
+  maxvalue 9999999;
+
 
 --创建通告信息表
 create table notice_inf(
@@ -95,6 +117,11 @@ comment on column notice_inf.title is '通告标题';
 comment on column notice_inf.context is '通告内容';
 comment on column notice_inf.create_date is '发布日期';
 comment on column notice_inf.user_id is '发布人';
+--创建主键通告信息id
+   create sequence sq_notice_inf_id
+    increment by 1
+    start with 1
+    maxvalue 9999999;
 
 --创建文档信息表
 create table document_inf(
@@ -108,3 +135,8 @@ create table document_inf(
   (user_id) REFERENCES user_inf(id)
 )
 comment on table document_inf is '文档信息表';
+--创建主键文档信息id
+create sequence sq_document_inf_id
+    increment by 1
+    start with 1
+    maxvalue 9999999;

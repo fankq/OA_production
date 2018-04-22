@@ -58,10 +58,17 @@
     <!-- 扫描basePackage下所有以@MyBatisDao注解的接口 -->
     <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
-        <property name="basePackage" value="ssm.dao"/>
+        <property name="basePackage" value="ssm.dao.handle"/>
         <property name="annotationClass" value="ssm.annotation.MyBatisDao"/>
     </bean>
-
+    <!-- 扫描basePackage下所有以@MyBatisDao注解的接口 -->
+    <bean id="mapperScannerConfigurer1" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+        <property name="basePackage" value="ssm.dao.auto"/>
+<!--
+        <property name="annotationClass" value="ssm.annotation.MyBatisDao"/>//不配置默认扫描包下所有类
+-->
+    </bean>
     <!-- 定义事务 -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource" />
