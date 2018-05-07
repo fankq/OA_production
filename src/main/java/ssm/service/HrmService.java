@@ -1,6 +1,5 @@
 package ssm.service;
 
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import org.springframework.stereotype.Service;
 import ssm.model.auto.*;
 import ssm.utils.PageModel;

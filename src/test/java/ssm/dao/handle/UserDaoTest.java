@@ -28,18 +28,18 @@ private UserDao dao;
     public void testGetUserByid()
     {
         UserInfo user1 = new UserInfo();
-        user1.setLoginname("fankq1");
+        user1.setLoginname("fankq2");
         user1.setPassword("111111");
         Short status = 1;
         user1.setStatus(status);
         user1.setCreatedate(new Date());
-        user1.setUsername("fankq1");
-/*
+        user1.setUsername("fankq2");
+
         int result= mapper.insert(user1);
-*/
-/*
+
+
         System.out.println(result);
-*/
+
         UserInfoExample example = new UserInfoExample();
         List<UserInfo> i= mapper.selectByExample(example);
         System.out.println(i.size());

@@ -34,7 +34,7 @@ public interface UserDao {
     @SelectProvider(type=UserDynaSqlProvider.class,method="insertUser")
     void save(UserInfo user);
     //根据参数查询用户总数
-    @SelectProvider(type=UserDynaSqlProvider.class,method="cont")
+    @SelectProvider(type=UserDynaSqlProvider.class,method="count")
     Integer count(Map<String,Object > params);
     //动态查询
     @SelectProvider(type=UserDynaSqlProvider.class,method="selectWithParam")
