@@ -2,23 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d62ec33f-1d3e-4b09-9606-e341cc97abf3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ssm/dao/handle/DeptDao.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ssm/dao/handle/EmployeeInfoDao.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ssm/dao/handle/JobInfoDao.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ssm/dao/handle/NoticeInfoDao.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ssm/dao/handle/provider/DeptDynaSqlProvider.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ssm/dao/handle/provider/EmployeeDynaSqlProvider.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ssm/dao/handle/provider/JobInfoDynaSqlProvider.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/ssm/dao/handle/provider/NoticeInfoDynaSqlProvider.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/ssm/dao/handle/UserDao.class" afterPath="$PROJECT_DIR$/target/classes/ssm/dao/handle/UserDao.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/ssm/dao/handle/UserDaoTest.class" afterPath="$PROJECT_DIR$/target/test-classes/ssm/dao/handle/UserDaoTest.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OA_production.iml" afterPath="$PROJECT_DIR$/OA_production.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ssm/dao/handle/UserDao.java" afterPath="$PROJECT_DIR$/src/main/java/ssm/dao/handle/UserDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ssm/service/HrmService.java" afterPath="$PROJECT_DIR$/src/main/java/ssm/service/HrmService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ssm/service/impl/HrmServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/ssm/service/impl/HrmServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/jdbc.properties" afterPath="$PROJECT_DIR$/src/main/resources/jdbc.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/ssm/dao/handle/UserDaoTest.java" afterPath="$PROJECT_DIR$/src/test/java/ssm/dao/handle/UserDaoTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/jdbc.properties" afterPath="$PROJECT_DIR$/target/classes/jdbc.properties" />
     </list>
     <ignored path="OA_production.iws" />
@@ -1423,7 +1409,7 @@
       <workItem from="1524383679427" duration="24374000" />
       <workItem from="1525352221287" duration="5088000" />
       <workItem from="1525572592159" duration="16066000" />
-      <workItem from="1525694462726" duration="1086000" />
+      <workItem from="1525694462726" duration="1129000" />
     </task>
     <task id="LOCAL-00001" summary="11">
       <created>1524394856166</created>
@@ -1437,7 +1423,13 @@
       <option name="project" value="LOCAL" />
       <updated>1524395056652</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Dao">
+      <created>1525695579688</created>
+      <option name="number" value="00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1525695579688</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1473,7 +1465,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="63544000" />
+    <option name="totallyTimeSpent" value="63587000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="70" y="-8" width="1858" height="1096" extended-state="6" />
@@ -1520,7 +1512,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="11" />
-    <option name="LAST_COMMIT_MESSAGE" value="11" />
+    <MESSAGE value="Dao" />
+    <option name="LAST_COMMIT_MESSAGE" value="Dao" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
