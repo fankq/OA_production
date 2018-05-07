@@ -2,15 +2,11 @@ package ssm.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import ssm.dao.auto.DeptInfoMapper;
-import ssm.dao.auto.EmployeeInfoMapper;
-import ssm.dao.auto.JobInfoMapper;
-import ssm.dao.auto.UserInfoMapper;
-import ssm.dao.handle.DeptDao;
-import ssm.dao.handle.EmployeeInfoDao;
-import ssm.dao.handle.JobInfoDao;
-import ssm.dao.handle.UserDao;
+import ssm.dao.auto.*;
+import ssm.dao.handle.*;
 import ssm.model.auto.*;
 import ssm.service.HrmService;
 import ssm.utils.PageModel;
@@ -23,7 +19,8 @@ import java.util.Map;
  * 人事管理系统服务层接口实现类
  * Created by fankq on 2018/4/22.
  */
-@Service
+@Transactional(propagation= Propagation.REQUIRED,isolation = Isolation.DEFAULT)
+@Service("hrmService")
 public class HrmServiceImpl implements HrmService {
 
     @Autowired
@@ -43,13 +40,24 @@ public class HrmServiceImpl implements HrmService {
     @Autowired
     private JobInfoMapper jobInfoDao;
 
+    @Autowired
     private JobInfoDao jobInfoDaoH;
+
+    @Autowired
+    private NoticeInfoDao noticeInfoDaoH;
+
+    @Autowired
+    private NoticeInfoMapper noticeInfoDao;
+
+    @Autowired
+    private DocumentInfoMapper documentInfoDao;
     /**
      * @see {HrmService}
      * @param loginname
      * @param password
      * @return
      */
+    @Transactional(readOnly =true)
     @Override
     public UserInfo login(String loginname, String password) {
 
@@ -63,6 +71,7 @@ public class HrmServiceImpl implements HrmService {
      * @param id
      * @return
      */
+    @Transactional(readOnly = true)
     @Override
     public UserInfo findUserInfoById(Integer id) {
         UserInfo userInfo = userDao.getUserById(id);
@@ -73,6 +82,7 @@ public class HrmServiceImpl implements HrmService {
      * @see {HrmService}
      * @return
      */
+    @Transactional(readOnly = true)
     @Override
     public List<UserInfo> findAllUser() {
         Map<String,Object> params = new HashMap<String,Object>();
@@ -104,6 +114,7 @@ public class HrmServiceImpl implements HrmService {
      * @param pageModel
      * @return
      */
+    @Transactional(readOnly = true)
     @Override
     public List<EmployeeInfo> findEmployee(EmployeeInfo employee, PageModel pageModel)
     {
@@ -129,6 +140,7 @@ public class HrmServiceImpl implements HrmService {
      * @param id
      * @return
      */
+    @Transactional(readOnly = true)
     @Override
     public EmployeeInfo findEmployeeById(Integer id) {
         return employeeInfoDao.selectByPrimaryKey(id.longValue());
@@ -152,6 +164,13 @@ public class HrmServiceImpl implements HrmService {
         employeeInfoDao.updateByPrimaryKeySelective(info);
     }
 
+    /**
+     * @see {HrmService}
+     * @param dept
+     * @param pageModel
+     * @return
+     */
+    @Transactional(readOnly = true)
     @Override
     public List<DeptInfo> findDept(DeptInfo dept, PageModel pageModel) {
         Map<String,Object> map = new HashMap<String,Object>();
@@ -160,6 +179,11 @@ public class HrmServiceImpl implements HrmService {
         return deptInfoDaoH.selectByPage(map);
     }
 
+    /**
+     * @see {HrmService}
+     * @return
+     */
+    @Transactional(readOnly = true)
     @Override
     public List<DeptInfo> findAllDept() {
         DeptInfoExample example = new DeptInfoExample();
@@ -176,6 +200,12 @@ public class HrmServiceImpl implements HrmService {
         deptInfoDao.insert(dept);
     }
 
+    /**
+     *      * @see {HrmService}
+     * @param id
+     * @return
+     */
+    @Transactional(readOnly = true)
     @Override
     public DeptInfo findDeptById(Integer id) {
         return deptInfoDao.selectByPrimaryKey(id.longValue());
@@ -194,6 +224,7 @@ public class HrmServiceImpl implements HrmService {
      * @see {HrmService}
      * @return
      */
+    @Transactional(readOnly = true)
     @Override
     public List<JobInfo> findAllJob() {
        return  jobInfoDao.selectByExample(new JobInfoExample());
@@ -206,6 +237,7 @@ public class HrmServiceImpl implements HrmService {
      * @param pageModel
      * @return
      */
+    @Transactional(readOnly = true)
     @Override
     public List<JobInfo> findJob(JobInfo jobInfo, PageModel pageModel) {
         Map<String,Object> map = new HashMap<String, Object>();
@@ -237,6 +269,7 @@ public class HrmServiceImpl implements HrmService {
      * @param id
      * @return
      */
+    @Transactional(readOnly = true)
     @Override
     public JobInfo findJobById(Integer id) {
         return jobInfoDao.selectByPrimaryKey(id.longValue());
@@ -257,9 +290,60 @@ public class HrmServiceImpl implements HrmService {
      * @param page
      * @return
      */
+    @Transactional(readOnly = true)
     @Override
     public List<NoticeInfo> findNotice(NoticeInfo notice, PageModel page) {
-
-        return null;
+        Map<String,Object> params = new HashMap<String,Object>();
+        params.put("noticeInfo",notice);
+        params.put("pageModel",page);
+        return noticeInfoDaoH.selectByPage(params);
     }
+
+    @Override
+    public void removeNoticeById(Integer i) {
+        noticeInfoDao.deleteByPrimaryKey(i.longValue());
+    }
+    @Transactional(readOnly = true)
+    @Override
+    public NoticeInfo findNoticeById(Integer i) {
+        return noticeInfoDao.selectByPrimaryKey(i.longValue());
+    }
+
+    @Override
+    public void addNotice(NoticeInfo notice) {
+         noticeInfoDao.insert(notice);
+    }
+
+    @Override
+    public void modifyNotice(NoticeInfo noticeInfo) {
+        noticeInfoDao.updateByPrimaryKey(noticeInfo);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<DocumentInfo> findDocument(DocumentInfo info) {
+        return documentInfoDao.selectByExample(new DocumentInfoExample());
+    }
+
+    @Override
+    public void addDocumentInfo(DocumentInfo info) {
+        documentInfoDao.insert(info);
+    }
+    @Transactional(readOnly = true)
+    @Override
+    public DocumentInfo findDocumentInfoById(Integer id) {
+        return documentInfoDao.selectByPrimaryKey(id.longValue());
+    }
+
+    @Override
+    public void removeDocumentInfoById(Integer id) {
+        documentInfoDao.deleteByPrimaryKey(id.longValue());
+    }
+
+    @Override
+    public void modifyDocument(DocumentInfo document) {
+        documentInfoDao.updateByPrimaryKey(document);
+    }
+
+
 }

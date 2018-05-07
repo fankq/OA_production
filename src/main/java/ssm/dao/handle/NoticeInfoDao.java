@@ -2,8 +2,8 @@ package ssm.dao.handle;
 
 import org.apache.ibatis.annotations.SelectProvider;
 import ssm.annotation.MyBatisDao;
-import ssm.dao.handle.provider.DeptDynaSqlProvider;
-import ssm.model.auto.DeptInfo;
+import ssm.dao.handle.provider.NoticeInfoDynaSqlProvider;
+import ssm.model.auto.NoticeInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -14,6 +14,6 @@ import java.util.Map;
 @MyBatisDao
 public interface NoticeInfoDao {
     //分页查询信息
-    @SelectProvider(type=DeptDynaSqlProvider.class,method="selectWithParam")
-    List<DeptInfo> selectByPage(Map<String,Object > params);
+    @SelectProvider(type= NoticeInfoDynaSqlProvider.class,method="selectWithParam")
+    List<NoticeInfo> selectByPage(Map<String,Object > params);
 }

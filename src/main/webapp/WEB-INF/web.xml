@@ -42,7 +42,17 @@
     <url-pattern>/*</url-pattern>&lt;!&ndash;默认拦截所有请求&ndash;&gt;
   </filter-mapping>-->
 
-
+<jsp-config>
+    <jsp-property-group>
+      <url-pattern>*.jsp</url-pattern>
+      <el-ignored>false</el-ignored>
+      <!--不能在页面使用java脚本-->
+      <scripting-invalid>true</scripting-invalid>
+<!--
+      <include-prelude>/WEB-INF/jsp/taglib.jsp</include-prelude>
+-->
+    </jsp-property-group>
+</jsp-config>
   <!-- spring监听器 -->
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

@@ -99,5 +99,33 @@ public interface HrmService {
     //获得所有公告
     List<NoticeInfo> findNotice(NoticeInfo notice,PageModel page);
 
+    //根据id删除公告
+    public void removeNoticeById(Integer i);
+
+    //根据id查询公告
+    public NoticeInfo findNoticeById(Integer i);
+
+    //添加公告
+    public void addNotice(NoticeInfo notice);
+
+    //修改公告
+    public void modifyNotice(NoticeInfo noticeInfo);
+
+    //获得所有文档
+    List<DocumentInfo> findDocument(DocumentInfo info);
+
+    //添加文档
+    void addDocumentInfo(DocumentInfo info);
+
+    //根据id查询文档
+    DocumentInfo findDocumentInfoById(Integer id);
+
+    //根据id删除文档
+    void removeDocumentInfoById(Integer id);
+
+    //修改文档
+    void modifyDocument(DocumentInfo document);
+
+
 
 }
