@@ -12,8 +12,6 @@ import ssm.model.auto.UserInfoExample;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by fankq on 2018/4/22.
  */

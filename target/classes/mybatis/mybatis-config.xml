@@ -4,6 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <!--通过这个配置文件，完成mybatis与数据库的连接  -->
 <configuration>
+
     <!-- 全局配置 -->
     <settings>
         <!-- 使用列标签代替列名 -->
@@ -55,4 +56,5 @@
         <mapper resource="com/wu/dao/RoleMapper.xml"/>
         <package name=""/>&ndash;&gt;&lt;!&ndash; ???用处？？？ &ndash;&gt;
     </mappers>-->
+
 </configuration>

@@ -13,6 +13,9 @@
         <!--s生成的pojo自动实现序列化接口-->
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
 
+
+
+
         <!-- optional，旨在创建class时，对注释进行控制 -->
         <commentGenerator>
             <!--去掉时间戳-->
