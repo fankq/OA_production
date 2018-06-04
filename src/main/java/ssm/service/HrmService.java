@@ -26,7 +26,10 @@ public interface HrmService {
      * 查找所有用户信息
      */
     List<UserInfo> findAllUser();
-
+    /**
+     * 根据条件分页查询用户信息
+     */
+    List<UserInfo> findUser(UserInfo user,PageModel pageModel);
     /**
      *添加用户
      */
@@ -37,6 +40,10 @@ public interface HrmService {
      */
     void modifyUser(UserInfo user);
 
+    /**
+     * 删除用户
+     */
+    void removeUserById(Integer id);
     /**
      *获得所有员工
      */

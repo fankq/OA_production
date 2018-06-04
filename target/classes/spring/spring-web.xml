@@ -15,12 +15,12 @@
     <context:component-scan base-package="ssm.controller"/>
 
     <!-- 定义无Controller的path<->view直接映射 -->
-   <!-- <mvc:view-controller path="/" view-name="redirect:admin"/>-->
-
+    <mvc:view-controller path="/" view-name="redirect:admin"/>
+    <mvc:annotation-driven />
     <!--配置JSP　显示ViewResolver(视图解析器)-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="prefix" value="/WEB-INF/view/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
     <!-- 开启驱动注解 可以将request参数与绑定到controller参数上-->
@@ -39,7 +39,7 @@
        -->
     <mvc:default-servlet-handler/>
     <mvc:resources mapping="/statics/**" location="/WEB-INF/statics/" /><!--可配置多个 -->
-
+    <mvc:resources mapping="/error/**" location="/WEB-INF/error/" />
     <!--spring mvc 子线程配置 为了提高效率有的项目需要线程来完成相关功能，不要可忽略-->
     <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
         <!-- 核心线程数 -->
@@ -64,7 +64,7 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/*"/>
-            <bean class="ssm.interceptor"/>
+            <bean class="ssm.interceptor.AuthorizedInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 

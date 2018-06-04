@@ -17,7 +17,7 @@ public class AuthorizedInterceptor implements HandlerInterceptor{
     /**
      * 定义不需要拦截的用户请求路径
      */
-    private static final String[] IGNOR_URI = {"/loginForm","/404.html"};
+    private static final String[] IGNOR_URI = {"/loginForm","/login","/404.jsp"};
 
     /**
      * 在请求转发controler之前调用，之后继续调用postHandle  以及afterCompletion
@@ -30,6 +30,7 @@ public class AuthorizedInterceptor implements HandlerInterceptor{
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         boolean flag = false;
+
         String servletPath = httpServletRequest.getServletPath();
         for(String s:IGNOR_URI){
             if(servletPath.contains(s)){

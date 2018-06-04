@@ -93,6 +93,28 @@ public class HrmServiceImpl implements HrmService {
     /**
      * @see {HrmService}
      * @param user
+     * @param pageModel
+     * @return
+     */
+    @Transactional(readOnly = true)
+    @Override
+    public List<UserInfo> findUser(UserInfo user, PageModel pageModel) {
+        Map map = new HashMap();
+        map.put("userInfo",user);
+        map.put("pageModel",pageModel);
+        return userDao.selectByPage(map);
+    }
+    /**
+     * @see {HrmService}
+     */
+    @Override
+    public void removeUserById(Integer id){
+        userDao.deleteById(id);
+    }
+
+    /**
+     * @see {HrmService}
+     * @param user
      */
     @Override
     public void addUser(UserInfo user) {

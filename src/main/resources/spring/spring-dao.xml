@@ -16,14 +16,14 @@
     <context:property-placeholder location="classpath:jdbc.properties" ignore-unresolvable="true"/>
 
     <!-- 配置通用Mapper -->
-    <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+ <!--   <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="tk.mybatis.springboot.mapper"/>
         <property name="properties">
             <value>
                 mappers=tk.mybatis.springboot.util.MyMapper
             </value>
         </property>
-    </bean>
+    </bean>-->
 
     <!--2.数据源druid -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
