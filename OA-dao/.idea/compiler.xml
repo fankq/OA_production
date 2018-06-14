@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <option name="DEFAULT_COMPILER" value="Eclipse" />
     <resourceExtensions />
     <wildcardResourcePatterns>
       <entry name="!?*.java" />
@@ -23,20 +22,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="OA-controller" />
         <module name="OA-dao" />
-        <module name="OA-demo" />
-        <module name="OA-service" />
-        <module name="OA-web" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="1.8">
-      <module name="OA-controller" target="1.8" />
-      <module name="OA-dao" target="1.8" />
-      <module name="OA-demo" target="1.8" />
-      <module name="OA-service" target="1.8" />
-      <module name="OA-web" target="1.8" />
-      <module name="OA_production" target="1.8" />
+    <bytecodeTargetLevel>
+      <module name="OA-dao" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

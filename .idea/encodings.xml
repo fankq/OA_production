@@ -2,6 +2,13 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/OA-" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/OA-controller" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/OA-dao" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/OA-demo" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/OA-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/OA-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/OA-web/src/main/resources/DBsql/createTable/tables.sql" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/resources/DBsql/createTable/tables.sql" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
   </component>

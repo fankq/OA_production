@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="OA-web:war">
+    <output-path>$PROJECT_DIR$/OA-web/target</output-path>
+    <root id="archive" name="OA-web-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="OA-web:war exploded" />
+    </root>
+  </artifact>
+</component>
