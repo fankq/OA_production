@@ -25,7 +25,8 @@
         <processorPath useClasspath="true" />
         <module name="OA-controller" />
         <module name="OA-dao" />
-        <module name="OA-demo" />
+        <module name="OA-interceptor" />
+        <module name="OA-model" />
         <module name="OA-service" />
         <module name="OA-web" />
       </profile>
@@ -34,6 +35,8 @@
       <module name="OA-controller" target="1.8" />
       <module name="OA-dao" target="1.8" />
       <module name="OA-demo" target="1.8" />
+      <module name="OA-interceptor" target="1.8" />
+      <module name="OA-model" target="1.8" />
       <module name="OA-service" target="1.8" />
       <module name="OA-web" target="1.8" />
       <module name="OA_production" target="1.8" />

@@ -10,6 +10,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>OA-controller</artifactId>
+    <name>OA-controller</name>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.OAdemo</groupId>
+            <artifactId>OA-service</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+
+    </dependencies>
 
 </project>
