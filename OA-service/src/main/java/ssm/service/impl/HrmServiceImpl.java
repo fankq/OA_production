@@ -117,8 +117,13 @@ public class HrmServiceImpl implements HrmService {
      * @param user
      */
     @Override
-    public void addUser(UserInfo user) {
-        userDao.save(user);
+    public boolean addUser(UserInfo user) {
+        int i = userDao.save(user);
+        if(i>0){
+            return true;
+        }else {
+            return false;
+        }
     }
 
     /**

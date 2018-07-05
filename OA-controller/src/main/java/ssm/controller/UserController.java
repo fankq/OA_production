@@ -1,5 +1,6 @@
 package ssm.controller;
 
+import fr.opensagres.xdocreport.document.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -15,7 +16,9 @@ import ssm.util.HrmConstants;
 import ssm.util.PageModel;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 18510 on 2018/5/10.
@@ -71,24 +74,44 @@ public class UserController {
         }
         return dto;
     }
-
+    /**
+     * 执行添加用户请求
+     * @param user
+     * @return
+     */
+    @RequestMapping(value = "/user/adduser")
+    @ResponseBody
+    public ResponseDto adduser(String flag, @ModelAttribute UserInfo user){
+        ResponseDto dto = new ResponseDto();
+        dto.setFlag("false");
+        boolean result;
+        try {
+            result= hrmService.addUser(user);
+        }catch(Exception e ){
+            dto.setMessage(e.getMessage());
+            return dto ;
+        }
+        dto.setFlag(""+result);
+        return dto;
+    }
     /**
      *处理查询用户请求
      * @param pageIndex
      * @param user
-     * @param model
      * @return
      */
     @RequestMapping(value="/user/selectUser")
-    public String selectUser(Integer pageIndex, @ModelAttribute UserInfo user, Model model){
+    @ResponseBody
+    public Map selectUser(Integer pageIndex, @ModelAttribute UserInfo user){
         PageModel pageModel = new PageModel();
         if(pageIndex!=null){
             pageModel.setPageIndex(pageIndex);
         }
         List<UserInfo> userInfos = hrmService.findUser(user,pageModel);
-        model.addAttribute("userInfos",userInfos);
-        model.addAttribute("pageModel",pageModel);
-        return "/user/user";
+        Map map = new HashMap();
+        map.put("userInfos",userInfos);
+        map.put("pageModel",pageModel);
+        return map;
     }
 
     /**
@@ -132,22 +155,7 @@ public class UserController {
         return modelAndView;
     }
 
-    /**
-     * 执行添加用户请求
-     * @param flag   1 跳转添加用户页面   2 执行添加用户请求操作
-     * @param user
-     * @param mv
-     * @return
-     */
-    public ModelAndView adduser(String flag, @ModelAttribute UserInfo user, ModelAndView mv){
-        if(flag.equals("1")){
-            mv.setViewName("user/showAddUser");
-        }else{
-            hrmService.addUser(user);
-            mv.setViewName("redirect:/user/selectUser");
-        }
-        return mv;
-    }
+
 
 
 }

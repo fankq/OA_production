@@ -32,7 +32,7 @@ public interface HrmService {
     /**
      *添加用户
      */
-    void addUser(UserInfo user);
+    boolean addUser(UserInfo user);
 
     /**
      * 修改用户

@@ -20,17 +20,19 @@ public class UserDynaSqlProvider {
                 if(params.get("userInfo")!=null){
                     UserInfo user = (UserInfo)params.get("userInfo");
                     if(!StringUtils.isNullOrEmpty(user.getUsername())){
-                        WHERE(" USERNAME LIKE CONCAT('%',#{userInfo.username},'%') ");
+                        WHERE(" USERNAME LIKE '%'||'#{userInfo.username}'||'%' ");
                     }
                     if(!StringUtils.isNullOrEmpty(user.getStatus())){
-                        WHERE(" status LIKE CONCAT('%',#{userInfo.status},'%') ");
+                        WHERE(" status LIKE '%'||'#{userInfo.status}'||'%' ");
                     }
                 }
 
             }
         }.toString();
         if(params.get("pageModel")!=null){
-            sql+="limit #{pageModel.firstLimitParam},#{pageModel.pageSize}";
+            /*sql+="limit #{pageModel.firstLimitParam},#{pageModel.pageSize}";*/
+            sql="select * from (select t.*,rownum from ("+sql+") t where rownum< #{pageModel.firstLimitParam}+#{pageModel.pageSize}) a where a.rownum>#{pageModel.firstLimitParam} ";
+            System.out.println(sql);
         }
         return  sql;
     }
@@ -60,6 +62,7 @@ public class UserDynaSqlProvider {
         String sql = new SQL() {
             {
                INSERT_INTO(USERTABLE);
+                VALUES("id","sq_user_inf_id.nextval");
                 if(!StringUtils.isNullOrEmpty(user.getUsername())){
                     VALUES("username","#{username}");
                 }
