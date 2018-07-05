@@ -15,7 +15,7 @@ public class StringUtils {
 
         if(null==O){
             return true;
-        }else if("".equals(0)){
+        }else if("".equals(O)){
             return true;
         }else{
             return false;

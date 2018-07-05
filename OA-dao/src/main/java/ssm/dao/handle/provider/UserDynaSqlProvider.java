@@ -20,10 +20,10 @@ public class UserDynaSqlProvider {
                 if(params.get("userInfo")!=null){
                     UserInfo user = (UserInfo)params.get("userInfo");
                     if(!StringUtils.isNullOrEmpty(user.getUsername())){
-                        WHERE(" USERNAME LIKE '%'||'#{userInfo.username}'||'%' ");
+                        WHERE(" USERNAME LIKE '%'||#{userInfo.username}||'%' ");
                     }
                     if(!StringUtils.isNullOrEmpty(user.getStatus())){
-                        WHERE(" status LIKE '%'||'#{userInfo.status}'||'%' ");
+                        WHERE(" status LIKE '%'||#{userInfo.status}||'%' ");
                     }
                 }
 
@@ -31,7 +31,7 @@ public class UserDynaSqlProvider {
         }.toString();
         if(params.get("pageModel")!=null){
             /*sql+="limit #{pageModel.firstLimitParam},#{pageModel.pageSize}";*/
-            sql="select * from (select t.*,rownum from ("+sql+") t where rownum< #{pageModel.firstLimitParam}+#{pageModel.pageSize}) a where a.rownum>#{pageModel.firstLimitParam} ";
+            sql="select * from (select t.*,rownum as rownum1 from ("+sql+") t where rownum< #{pageModel.firstLimitParam}+#{pageModel.pageSize}) a where a.rownum1>#{pageModel.firstLimitParam} ";
             System.out.println(sql);
         }
         return  sql;
