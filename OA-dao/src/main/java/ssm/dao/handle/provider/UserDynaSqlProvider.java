@@ -2,6 +2,7 @@ package ssm.dao.handle.provider;
 
 import org.apache.ibatis.jdbc.SQL;
 import ssm.model.auto.UserInfo;
+import ssm.util.PageModel;
 import ssm.util.StringUtils;
 
 import static ssm.util.HrmConstants.USERTABLE;
@@ -32,7 +33,9 @@ public class UserDynaSqlProvider {
         if(params.get("pageModel")!=null){
             /*sql+="limit #{pageModel.firstLimitParam},#{pageModel.pageSize}";*/
             sql="select * from (select t.*,rownum as rownum1 from ("+sql+") t where rownum< #{pageModel.firstLimitParam}+#{pageModel.pageSize}) a where a.rownum1>#{pageModel.firstLimitParam} ";
-            System.out.println(sql);
+            System.out.println(
+                    ((PageModel)params.get("pageModel")).getFirstLimitParam()+ "|"+((PageModel)params.get("pageModel")).getPageSize() +
+                    sql);
         }
         return  sql;
     }
@@ -46,10 +49,10 @@ public class UserDynaSqlProvider {
                 if(params.get("userInfo")!=null){
                     UserInfo user = (UserInfo)params.get("userInfo");
                     if(!StringUtils.isNullOrEmpty(user.getUsername())){
-                        WHERE(" USERNAME LIKE CONCAT('%',#{userInfo.username},'%') ");
+                        WHERE(" USERNAME LIKE '%'||#{userInfo.username}||'%' ");
                     }
                     if(!StringUtils.isNullOrEmpty(user.getStatus())){
-                        WHERE(" status LIKE CONCAT('%',#{userInfo.status},'%') ");
+                        WHERE(" status LIKE '%'||#{userInfo.status}||'%' ");
                     }
                 }
 

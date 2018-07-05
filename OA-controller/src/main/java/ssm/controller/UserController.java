@@ -106,11 +106,14 @@ public class UserController {
         PageModel pageModel = new PageModel();
         if(pageIndex!=null){
             pageModel.setPageIndex(pageIndex);
+        }else{
+            pageModel.setPageIndex(1);
         }
         List<UserInfo> userInfos = hrmService.findUser(user,pageModel);
         Map map = new HashMap();
         map.put("userInfos",userInfos);
         map.put("pageModel",pageModel);
+
         return map;
     }
 
