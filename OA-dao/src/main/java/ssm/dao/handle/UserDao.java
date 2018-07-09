@@ -22,8 +22,8 @@ public interface UserDao {
     @Select("select * from "+USERTABLE+" where id = #{id}")
     UserInfo getUserById(int id);
     //根据ID删除用户
-    @Delete("delete from "+USERTABLE+"WHERE ID = #{id}")
-    int deleteById(Integer id);
+    @Delete("delete from "+USERTABLE+" WHERE ID = #{id}")
+    int deleteById(Long id);
     //动态修改用户
     @UpdateProvider(type=UserDynaSqlProvider.class,method = "updateUser")
     int update(UserInfo user);

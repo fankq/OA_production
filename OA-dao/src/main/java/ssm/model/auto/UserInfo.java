@@ -16,6 +16,14 @@ public class UserInfo implements Serializable {
 
     private String username;
 
+    private boolean editFlag =false;
+
+    public boolean isEditFlag() {
+        return editFlag;
+    }
+
+
+
     private static final long serialVersionUID = 1L;
 
     public UserInfo(Long id, String loginname, String password, Short status, Date createdate, String username) {

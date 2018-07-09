@@ -1,6 +1,7 @@
 package ssm.controller;
 
 import fr.opensagres.xdocreport.document.json.JSONObject;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,7 @@ import java.util.Map;
  */
 @Controller
 public class UserController {
+    private static Logger logger = Logger.getLogger(UserController.class);
     /**
      * 自动注入服务
      */
@@ -59,6 +61,7 @@ public class UserController {
     @RequestMapping(value="/login")
     @ResponseBody
     public ResponseDto login(String loginname, String password , HttpSession session){
+        logger.info(loginname+"用户尝试登录！");
         ResponseDto dto = new ResponseDto();
         //调用业务逻辑组件判断用户是否可以登录
         UserInfo user = hrmService.login(loginname,password);
@@ -68,6 +71,7 @@ public class UserController {
             //客户端跳转到main页面
             dto.setFlag("success");
             dto.setMessage("登陆成功！");
+            logger.info(loginname+"用户登录成功！");
         }else{
             dto.setMessage("登陆名和密码错误！请重新输入");
             dto.setFlag("error");
@@ -116,47 +120,48 @@ public class UserController {
 
         return map;
     }
-
-    /**
-     * 处理用户删除请求
-     */
-    @RequestMapping(value="/user/removeUser")
-    public ModelAndView removeUser(String ids ,ModelAndView mv){
-        String[] idArray = ids.split(",");
-        for(String id : idArray){
-            hrmService.removeUserById(Integer.parseInt(id)  );
-        }
-        //跳转查询请求
-        mv.setViewName("redirect:/user/selectUser");
-        return mv;
-    }
-
     /**
      *
      * 处理用户修改请求
      * @param flag  1 跳转修改页面   2 执行修改操作
      * @param user
-     * @param modelAndView
      * @return
      */
     @RequestMapping(value = "/user/updateUser")
-    public ModelAndView updateUser(
-            String flag,
-            @ModelAttribute UserInfo user,
-            ModelAndView modelAndView
-    ){
-        if(flag.equals("1")){
-            //根据id查询
-            UserInfo target = hrmService.findUserInfoById(user.getId().intValue());
-            //设置MOdel
-            modelAndView.addObject("user",target);
-            modelAndView.setViewName("user/showUpdateUser");
-        }else{
-            hrmService.modifyUser(user);
-            modelAndView.setViewName("redirect:/user/selectUser");
+    @ResponseBody
+    public ResponseDto updateUser(String flag,  UserInfo user){
+        ResponseDto dto = new ResponseDto();
+        dto.setFlag("false");
+
+        try {
+             hrmService.modifyUser(user);
+             dto.setFlag("true");
+        }catch(Exception e ){
+            dto.setMessage(e.getMessage());
+            return dto ;
         }
-        return modelAndView;
+
+        return dto;
     }
+
+    /**
+     * 处理用户删除请求
+     */
+    @RequestMapping(value="/user/removeUser")
+    @ResponseBody
+    public ResponseDto removeUser(UserInfo user){
+        ResponseDto dto = new ResponseDto();
+        dto.setFlag("false");
+        try {
+            hrmService.removeUserById(user.getId()  );
+            dto.setFlag("true");
+        }catch(Exception e ){
+            dto.setMessage(e.getMessage());
+            return dto ;
+        }
+        return dto;
+    }
+
 
 
 

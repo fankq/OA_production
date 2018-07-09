@@ -102,13 +102,14 @@ public class HrmServiceImpl implements HrmService {
         Map map = new HashMap();
         map.put("userInfo",user);
         map.put("pageModel",pageModel);
+        pageModel.setRecordCount(userDao.count(map));
         return userDao.selectByPage(map);
     }
     /**
      * @see {HrmService}
      */
     @Override
-    public void removeUserById(Integer id){
+    public void removeUserById(Long id){
         userDao.deleteById(id);
     }
 
@@ -131,8 +132,15 @@ public class HrmServiceImpl implements HrmService {
      * @param user
      */
     @Override
-    public void modifyUser(UserInfo user) {
-        userDao.update(user);
+    public boolean modifyUser(UserInfo user) {
+
+        int i = userDao.update(user);
+        if(i==1){
+            return true;
+        }else{
+            return false;
+        }
+
     }
 
     /**

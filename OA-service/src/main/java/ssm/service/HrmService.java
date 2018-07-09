@@ -37,12 +37,12 @@ public interface HrmService {
     /**
      * 修改用户
      */
-    void modifyUser(UserInfo user);
+    boolean modifyUser(UserInfo user);
 
     /**
      * 删除用户
      */
-    void removeUserById(Integer id);
+    void removeUserById(Long id);
     /**
      *获得所有员工
      */

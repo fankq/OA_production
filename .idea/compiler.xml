@@ -34,12 +34,14 @@
     <bytecodeTargetLevel target="1.8">
       <module name="OA-controller" target="1.8" />
       <module name="OA-dao" target="1.8" />
-      <module name="OA-demo" target="1.8" />
       <module name="OA-interceptor" target="1.8" />
       <module name="OA-model" target="1.8" />
       <module name="OA-service" target="1.8" />
       <module name="OA-web" target="1.8" />
       <module name="OA_production" target="1.8" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="EclipseCompilerSettings">
+    <option name="ADDITIONAL_OPTIONS_STRING" value="encoding=UTF-8" />
   </component>
 </project>

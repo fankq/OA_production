@@ -13,6 +13,15 @@
 
     <!-- 扫描controller(后端控制器),并且扫描其中的注解-->
     <context:component-scan base-package="ssm.controller"/>
+    <mvc:annotation-driven conversion-service="conversionService"/>
+    <!--请求参数绑定失败，加载类型转换器-->
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <list>
+                <bean class="ssm.converter.StringToDateConverter"/>
+            </list>
+        </property>
+    </bean>
 
     <!-- 定义无Controller的path<->view直接映射 -->
     <mvc:view-controller path="/" view-name="redirect:admin"/>

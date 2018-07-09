@@ -115,7 +115,7 @@
                             cache:true,//保留缓存数据
                             type:"POST",//为post请求
                             url:url,//这是我在后台接受数据的文件名
-                            data:this.form,//将该表单序列化
+                            data:_self.form,//将该表单序列化
                             async:false,//设置成true，这标志着在请求开始后，其他代码依然能够执行。如果把这个选项设置成false，这意味着所有的请求都不再是异步的了，这也会导致浏览器被锁死
                             error:function(request){//请求失败之后的操作
                                 alert("error！")
@@ -124,7 +124,7 @@
                             success:function(data){//请求成功之后的操作
                                 if(data.flag=="true"){
                                     alert("创建成功！");
-                                    doReset(_self);
+                                    _self.doReset('form');
                                     _self.$router.push("/userslist");
 
                                 }else{

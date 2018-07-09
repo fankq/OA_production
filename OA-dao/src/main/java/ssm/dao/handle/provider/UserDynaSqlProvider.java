@@ -32,7 +32,7 @@ public class UserDynaSqlProvider {
         }.toString();
         if(params.get("pageModel")!=null){
             /*sql+="limit #{pageModel.firstLimitParam},#{pageModel.pageSize}";*/
-            sql="select * from (select t.*,rownum as rownum1 from ("+sql+") t where rownum< #{pageModel.firstLimitParam}+#{pageModel.pageSize}) a where a.rownum1>#{pageModel.firstLimitParam} ";
+            sql="select * from (select t.*,rownum as rownum1 from ("+sql+") t where rownum<= #{pageModel.firstLimitParam}+#{pageModel.pageSize}) a where a.rownum1>#{pageModel.firstLimitParam} ";
             System.out.println(
                     ((PageModel)params.get("pageModel")).getFirstLimitParam()+ "|"+((PageModel)params.get("pageModel")).getPageSize() +
                     sql);
@@ -84,7 +84,7 @@ public class UserDynaSqlProvider {
     }
     //动态更新操作
     public String updateUser(UserInfo user){
-        return new SQL(){
+        String sql  = new SQL(){
             {
                 UPDATE(USERTABLE);
                 if(!StringUtils.isNullOrEmpty(user.getUsername())){
@@ -99,7 +99,10 @@ public class UserDynaSqlProvider {
                 if(!StringUtils.isNullOrEmpty(user.getPassword())){
                     SET("password=#{password}");
                 }
+                WHERE("id = #{id}");
             }
         }.toString();
+        System.out.println(sql);
+        return sql;
     }
 }
