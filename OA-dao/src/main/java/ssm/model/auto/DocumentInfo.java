@@ -1,5 +1,7 @@
 package ssm.model.auto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,6 +15,16 @@ public class DocumentInfo implements Serializable {
     private String remark;
 
     private Date createDate;
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
+    private MultipartFile file;
 
     private Long userId;
 

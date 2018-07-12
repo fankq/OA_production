@@ -72,6 +72,8 @@
                             <i class="el-icon-location"></i>
                             <span>下载中心</span>
                         </template>
+                        <el-menu-item index="/upload">文件上传</el-menu-item>
+                        <el-menu-item index="/download">文件下载</el-menu-item>
                     </el-submenu>
                 </el-menu>
             </el-col>
@@ -79,7 +81,6 @@
             </el-aside>
             <el-main>
                 <router-view></router-view>
-
             </el-main>
         </el-container>
     </el-container>
@@ -116,6 +117,7 @@
 <jsp:include page="home.jsp"/>
 <jsp:include  page="user/userlist.jsp"/>
 <jsp:include  page="user/addUser.jsp"/>
+<jsp:include  page="document/upload.jsp"/>
 
 <script type="text/javascript">
 
@@ -131,6 +133,9 @@
         {
             path:"/addUser",
             component: addUser
+        }, {
+            path:"/upload",
+            component: upload
         }
     ]
 
