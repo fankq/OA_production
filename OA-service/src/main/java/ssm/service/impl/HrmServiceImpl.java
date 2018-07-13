@@ -357,7 +357,13 @@ public class HrmServiceImpl implements HrmService {
     @Transactional(readOnly = true)
     @Override
     public List<DocumentInfo> findDocument(DocumentInfo info) {
-        return documentInfoDao.selectByExample(new DocumentInfoExample());
+        DocumentInfoExample example =    new DocumentInfoExample();
+        DocumentInfoExample.Criteria c=example.createCriteria();
+        c.andTitleLike(info.getTitle());
+        if(null!=info.getUserId()){
+            c.andUserIdEqualTo(info.getUserId());
+        }
+        return documentInfoDao.selectByExample(example);
     }
 
     @Override
@@ -366,12 +372,12 @@ public class HrmServiceImpl implements HrmService {
     }
     @Transactional(readOnly = true)
     @Override
-    public DocumentInfo findDocumentInfoById(Integer id) {
+    public DocumentInfo findDocumentInfoById(Long id) {
         return documentInfoDao.selectByPrimaryKey(id.longValue());
     }
 
     @Override
-    public void removeDocumentInfoById(Integer id) {
+    public void removeDocumentInfoById(Long id) {
         documentInfoDao.deleteByPrimaryKey(id.longValue());
     }
 

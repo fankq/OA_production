@@ -87,13 +87,16 @@
             uploadSuccess(response, file, fileList){
                 console.log('上传文件成功', response,file,fileList);
                 if(response.flag=='success'){
-                    if (this.fileList instanceof Array){
+                    if (fileList instanceof Array){
                         var file1;
-                        for(var i in this.fileList){
-                            file1 = this.fileList[i];
+                        for(var i in fileList){
+                            file1 = fileList[i];
+                            console.log(file1);
                             if(file.uid ==file1.uid)
-                            file1.id=response.doumentInfo.id;
+                            file1["id"]=response.docId;
+                            console.log(file1);
                         }
+
                     }
                 }else{
                     this.$message.warning("上传出错");
@@ -101,6 +104,8 @@
             },
             handleRemove(file, fileList) {
                 console.log(file, fileList);
+                return false;
+
             },
             handlePreview(file) {
                 console.log('handlePreview'+file);
@@ -111,14 +116,27 @@
             beforeRemove(file, fileList) {
                 console.log(file, fileList);
                 var isRemove=this.$confirm(`确定移除` +file.name +`？`);
-                if(isRemove){
-                    //发送ajax请求删除相关文件及路径存储
-
-                    $.ajax(
+                if(file.status=='success'){
+                    var url = `${pageContext.request.contextPath}/document/delete`;
+                    $.ajax({
+                                cache:true,//保留缓存数据
+                                type:"POST",//为post请求
+                                url:url,//这是我在后台接受数据的文件名
+                                data:{
+                                    id:file.id
+                                },//将该表单序列化
+                                async:false,//设置成true，这标志着在请求开始后，其他代码依然能够执行。如果把这个选项设置成false，这意味着所有的请求都不再是异步的了，这也会导致浏览器被锁死
+                                error:function(request){//请求失败之后的操作
+                                    alert("error!")
+                                    return;
+                                },
+                                success:function(data){//请求成功之后的操作
+                                    console.log(data);
+                                }
+                            }
 
                     )
                 }
-
                 return isRemove;
             },
             submitUpload() {

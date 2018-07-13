@@ -124,10 +124,10 @@ public interface HrmService {
     void addDocumentInfo(DocumentInfo info);
 
     //根据id查询文档
-    DocumentInfo findDocumentInfoById(Integer id);
+    DocumentInfo findDocumentInfoById(Long id);
 
     //根据id删除文档
-    void removeDocumentInfoById(Integer id);
+    void removeDocumentInfoById(Long id);
 
     //修改文档
     void modifyDocument(DocumentInfo document);
