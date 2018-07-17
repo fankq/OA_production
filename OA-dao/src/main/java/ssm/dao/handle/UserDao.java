@@ -20,7 +20,7 @@ public interface UserDao {
     UserInfo selectByLoginnameAndPassword(@Param("loginname") String loginname, @Param("password") String password);
     //根据id查询员工信息
     @Select("select * from "+USERTABLE+" where id = #{id}")
-    UserInfo getUserById(int id);
+    UserInfo getUserById(Long id);
     //根据ID删除用户
     @Delete("delete from "+USERTABLE+" WHERE ID = #{id}")
     int deleteById(Long id);

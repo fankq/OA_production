@@ -73,7 +73,7 @@ public class HrmServiceImpl implements HrmService {
      */
     @Transactional(readOnly = true)
     @Override
-    public UserInfo findUserInfoById(Integer id) {
+    public UserInfo findUserInfoById(Long id) {
         UserInfo userInfo = userDao.getUserById(id);
         return userInfo;
     }
@@ -85,6 +85,7 @@ public class HrmServiceImpl implements HrmService {
     @Transactional(readOnly = true)
     @Override
     public List<UserInfo> findAllUser() {
+
         Map<String,Object> params = new HashMap<String,Object>();
         List<UserInfo> infos = userDao.selectByPage(params);
         return infos;
@@ -110,6 +111,7 @@ public class HrmServiceImpl implements HrmService {
      */
     @Override
     public void removeUserById(Long id){
+        getUserList().clear();
         userDao.deleteById(id);
     }
 
@@ -119,6 +121,7 @@ public class HrmServiceImpl implements HrmService {
      */
     @Override
     public boolean addUser(UserInfo user) {
+        getUserList().clear();
         int i = userDao.save(user);
         if(i>0){
             return true;
@@ -133,6 +136,7 @@ public class HrmServiceImpl implements HrmService {
      */
     @Override
     public boolean modifyUser(UserInfo user) {
+        getUserList().clear();
 
         int i = userDao.update(user);
         if(i==1){
@@ -354,16 +358,32 @@ public class HrmServiceImpl implements HrmService {
         noticeInfoDao.updateByPrimaryKey(noticeInfo);
     }
 
+    private static Map<Long,UserInfo> userList ;
+
+    private Map<Long,UserInfo> getUserList(){
+        if(userList==null){
+            userList = new HashMap<Long,UserInfo>();
+        }
+        return userList;
+
+    }
     @Transactional(readOnly = true)
     @Override
     public List<DocumentInfo> findDocument(DocumentInfo info) {
         DocumentInfoExample example =    new DocumentInfoExample();
         DocumentInfoExample.Criteria c=example.createCriteria();
-        c.andTitleLike(info.getTitle());
+        c.andTitleLike("%"+info.getTitle()+"%");
         if(null!=info.getUserId()){
             c.andUserIdEqualTo(info.getUserId());
         }
-        return documentInfoDao.selectByExample(example);
+        List<DocumentInfo> documentInfos =  documentInfoDao.selectByExample(example);
+        for(DocumentInfo info1 :documentInfos){
+            if(getUserList().get(info1.getUserId())==null) {//加入服务器缓存
+                getUserList().put(info1.getUserId(), userDao.getUserById(info1.getUserId()));
+            }
+            info1.setUser(userList.get(info1.getUserId()));
+        }
+        return documentInfos;
     }
 
     @Override

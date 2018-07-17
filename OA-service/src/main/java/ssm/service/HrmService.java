@@ -19,7 +19,7 @@ public interface HrmService {
     /**
      * @param id
      */
-    UserInfo findUserInfoById(Integer id);
+    UserInfo findUserInfoById(Long id);
 
     /**
      * 查找所有用户信息

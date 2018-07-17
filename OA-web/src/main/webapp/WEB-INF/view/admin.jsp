@@ -73,7 +73,7 @@
                             <span>下载中心</span>
                         </template>
                         <el-menu-item index="/upload">文件上传</el-menu-item>
-                        <el-menu-item index="/download">文件下载</el-menu-item>
+                        <el-menu-item index="/documentList">文件下载</el-menu-item>
                     </el-submenu>
                 </el-menu>
             </el-col>
@@ -118,6 +118,7 @@
 <jsp:include  page="user/userlist.jsp"/>
 <jsp:include  page="user/addUser.jsp"/>
 <jsp:include  page="document/upload.jsp"/>
+<jsp:include  page="document/documentlist.jsp"/>
 
 <script type="text/javascript">
 
@@ -133,9 +134,14 @@
         {
             path:"/addUser",
             component: addUser
-        }, {
+        },
+        {
             path:"/upload",
             component: upload
+        },
+        {
+            path:"/documentList",
+            component: documentList
         }
     ]
 

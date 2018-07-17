@@ -16,6 +16,20 @@ public class DocumentInfo implements Serializable {
 
     private Date createDate;
 
+    private UserInfo user;
+
+    public UserInfo getUser() {
+        return user;
+    }
+
+    public void setUser(UserInfo user) {
+        this.user = user;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     public MultipartFile getFile() {
         return file;
     }

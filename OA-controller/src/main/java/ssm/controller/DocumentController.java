@@ -1,9 +1,15 @@
 package ssm.controller;
 
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import net.sf.json.JSONObject;
+import org.apache.commons.io.FileUtils;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +26,7 @@ import ssm.util.PageModel;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -33,12 +40,25 @@ import java.util.Map;
 public class DocumentController {
 
 
-
     @Autowired
     @Qualifier("hrmService")
     private HrmService hrmService;
 
     /**
+     * 处理用户下载文件请求
+     */
+    @RequestMapping(value="/download")
+    public  ResponseEntity<byte[]> download(DocumentInfo documentInfo,HttpSession session) throws IOException {
+        DocumentInfo info = hrmService.findDocumentInfoById(documentInfo.getId());
+        String fileName = info.getFilename();
+        String path = session.getServletContext().getRealPath("/WEB-INF/statics/upload/");
+        File file = new File(path+File.separator+fileName);
+        HttpHeaders headers = new HttpHeaders();
+        String downloadFileName = new String(fileName.getBytes("UTF-8"),"iso-8859-1");
+        headers.setContentDispositionFormData("attachment",downloadFileName);
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),headers, HttpStatus.CREATED);
+    }    /**
      *处理用户上传文件请求
      * @return
      */
@@ -51,7 +71,7 @@ public class DocumentController {
         String fileName = documentInfo.getFile().getOriginalFilename();
         //上传文件保存路径
         String path = session.getServletContext().getRealPath("/WEB-INF/statics/upload/");
-        File file = new File(path+File.pathSeparator+fileName);
+        File file = new File(path+File.separator+fileName);
         if(!file.getParentFile().exists()){
             file.getParentFile().mkdir();
         }
@@ -72,17 +92,19 @@ public class DocumentController {
      */
     @RequestMapping(value="/query")
     @ResponseBody
-    public String  query(DocumentInfo documentInfo,HttpSession session) throws IOException {
+    public Map<String,Object>  query(DocumentInfo documentInfo,HttpSession session) throws IOException {
         //获取当前用户信息
         UserInfo user = (UserInfo) session.getAttribute(HrmConstants.USER_SESSION);
         documentInfo.setUserId(user.getId());
         List<DocumentInfo> documentInfos = hrmService.findDocument(documentInfo);
 
+
         Map<String,Object> dto = new HashMap<String,Object>();
         dto.put("flag","success");
-        dto.put("docId",documentInfos);
-        JSONObject json = JSONObject.fromObject(dto);
-        return json.toString();
+        dto.put("documentInfos",documentInfos);
+
+
+        return dto;
     }
 
     /**
