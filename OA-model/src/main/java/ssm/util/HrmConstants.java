@@ -13,7 +13,7 @@ public class HrmConstants {
     public static final String NOTICETABLE="NOTICE_INF";
     public static final String DOCUMENTTABLE="DOCUMENT_INF";
     //登录
-    public static final String LOGIN ="loginForm";
+    public static final String LOGIN ="/loginForm";
     //用户的session对象
     public static final String USER_SESSION="user_session";
     //默认每页四条数据

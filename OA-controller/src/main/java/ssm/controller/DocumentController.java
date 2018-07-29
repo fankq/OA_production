@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,10 +24,12 @@ import ssm.service.HrmService;
 import ssm.util.HrmConstants;
 import ssm.util.PageModel;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +40,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value="/document")
-public class DocumentController {
+public class DocumentController extends BaseController {
 
 
     @Autowired
@@ -130,4 +133,7 @@ public class DocumentController {
 
         return JSONObject.fromObject(dto).toString();
     }
+
+
+
 }

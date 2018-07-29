@@ -17,7 +17,7 @@ public class AuthorizedInterceptor implements HandlerInterceptor{
     /**
      * 定义不需要拦截的用户请求路径
      */
-    private static final String[] IGNOR_URI = {"/loginForm","/login","/404.jsp"};
+    private static final String[] IGNOR_URI = {"/loginForm","/login","/error/404.jsp"};
 
     /**
      * 在请求转发controler之前调用，之后继续调用postHandle  以及afterCompletion

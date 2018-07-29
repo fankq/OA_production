@@ -13,9 +13,12 @@
 
     <!-- 扫描controller(后端控制器),并且扫描其中的注解-->
     <context:component-scan base-package="ssm.controller"/>
-    <mvc:annotation-driven conversion-service="conversionService"/>
+    <mvc:annotation-driven conversion-service="conversionService1"/>
     <!--请求参数绑定失败，加载类型转换器-->
-    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+<!--
+    是同时注册了id为”ConversionService“和mvc:resources的问题。如果你把”ConversionService“的bean id修改成另一个名称，就不会报错了。
+-->
+    <bean id="conversionService1" class="org.springframework.context.support.ConversionServiceFactoryBean">
         <property name="converters">
             <list>
                 <bean class="ssm.converter.StringToDateConverter"/>
@@ -48,7 +51,7 @@
        -->
     <mvc:default-servlet-handler/>
     <mvc:resources mapping="/statics/**" location="/WEB-INF/statics/" /><!--可配置多个 -->
-    <mvc:resources mapping="/error/**" location="/WEB-INF/error/" />
+
     <!--spring mvc 子线程配置 为了提高效率有的项目需要线程来完成相关功能，不要可忽略-->
     <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
         <!-- 核心线程数 -->
@@ -72,7 +75,11 @@
     </mvc:interceptors>-->
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/*"/>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/loginForm"/>
+            <mvc:exclude-mapping path="/statics/**"/>
+            <mvc:exclude-mapping path="/error/**"/>
+
             <bean class="ssm.interceptor.AuthorizedInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
@@ -93,28 +100,33 @@
     用法配置如下：-->
     <bean id="exceptionResolver"
           class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-        <property name="defaultErrorView">
-            <value>failure</value>
+        <property name="exceptionMappings">
+            <props>
+                <prop key="java.sql.SQLException">/error/error_500</prop><!--返回页面的相对于view的根路径-->
+                <prop key="ssm.controller.model.BusinessException">/error/error_500</prop>
+                <prop key="java.lang.RuntimeException">/error/error_500</prop>
+                <prop key="java.lang.NullPointerException">/error/error_500</prop>
+                <prop key="java.io.FileNotFoundException">/error/error_500</prop>
+
+            </props>
         </property>
         <!-- 相关状态码对应的错误页面 -->
         <property name="statusCodes">
             <props>
-                <prop key="errors/500">500</prop>
-                <prop key="errors/404">404</prop>
+                <prop key="/error/500">500</prop><!--request路径-->
+                <prop key="/error/404">404</prop>
             </props>
         </property>
+
+        <property name="defaultErrorView">
+            <value>failure</value>
+        </property>
+
         <!-- 设置日志输出级别，不定义则默认不输出警告等错误日志信息 -->
-        <property name="warnLogCategory" value="WARN" />
+        <property name="warnLogCategory" value="DEBUG" />
         <!-- 默认HTTP状态码 -->
         <property name="defaultStatusCode" value="500" />
 
-        <property name="exceptionMappings">
-            <props>
-                <prop key="java.sql.SQLException">showDBError</prop>
-                <prop key="ssm.controller.model.BusinessException">error</prop>
-                <prop key="java.lang.RuntimeException">showError</prop>
 
-            </props>
-        </property>
     </bean>
 </beans>
