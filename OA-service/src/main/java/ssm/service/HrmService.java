@@ -10,6 +10,10 @@ import java.util.List;
  */
 public interface HrmService {
     /**
+     * 通过用户名获取用户信息
+     */
+    UserInfo findUserInfoByUsername(String loginname);
+    /**
      * 用户登录
      * @param loginname
      *@param password

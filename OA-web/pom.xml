@@ -21,11 +21,7 @@
             <artifactId>OA-controller</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-redis</artifactId>
-            <version>1.7.5.RELEASE</version>
-        </dependency>
+
     </dependencies>
 
 

@@ -4,15 +4,21 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/mvc
-        http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
 
     <!-- 扫描controller(后端控制器),并且扫描其中的注解-->
     <context:component-scan base-package="ssm.controller"/>
+    <mvc:annotation-driven />
+
     <mvc:annotation-driven conversion-service="conversionService1"/>
     <!--请求参数绑定失败，加载类型转换器-->
 <!--
@@ -28,7 +34,6 @@
 
     <!-- 定义无Controller的path<->view直接映射 -->
     <mvc:view-controller path="/" view-name="redirect:admin"/>
-    <mvc:annotation-driven />
     <!--配置JSP　显示ViewResolver(视图解析器)-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
@@ -73,16 +78,16 @@
          <bean class="com.example.interceptor.LogInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>-->
-    <mvc:interceptors>
-        <mvc:interceptor>
-            <mvc:mapping path="/**"/>
-            <mvc:exclude-mapping path="/loginForm"/>
-            <mvc:exclude-mapping path="/statics/**"/>
-            <mvc:exclude-mapping path="/error/**"/>
+    <!--<mvc:interceptors>-->
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/**"/>-->
+            <!--<mvc:exclude-mapping path="/loginForm"/>-->
+            <!--<mvc:exclude-mapping path="/statics/**"/>-->
+            <!--<mvc:exclude-mapping path="/error/**"/>-->
 
-            <bean class="ssm.interceptor.AuthorizedInterceptor"/>
-        </mvc:interceptor>
-    </mvc:interceptors>
+            <!--<bean class="ssm.interceptor.AuthorizedInterceptor"/>-->
+        <!--</mvc:interceptor>-->
+    <!--</mvc:interceptors>-->
 
     <!-- 上传功能配置 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -129,4 +134,14 @@
 
 
     </bean>
+   <!--引入其他springMVC配置模块-->
+    <!--<import resource="spring-dubbo.xml"></import>-->
+<!--
+    <import resource="spring-quartz.xml"></import>
+-->
+    <import resource="spring-redis.xml"></import>
+    <import resource="spring-dao.xml"></import>
+    <import resource="spring-shiro.xml"></import>
+
+
 </beans>

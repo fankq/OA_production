@@ -3,7 +3,8 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+
+   <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
         <property name="connectionFactory" ref="jeidsConnectionFactory"/>
     </bean>
     <context:property-placeholder location="classpath:redis-config.properties" ignore-unresolvable="true"/>
@@ -16,15 +17,20 @@
         <constructor-arg ref="redisClusterConfiguration"/>
         <constructor-arg ref="jedisPoolConfig"/>
     </bean>
+<!--   &lt;!&ndash;redis连接池配置&ndash;&gt;
+   <bean id="jedisPool" class="redis.clients.jedis.JedisCluster">
+      <constructor-arg name="poolConfig" ref="jedisPoolConfig"/>
+      <constructor-arg  name="redisClusterConfiguration" ref="redisClusterConfiguration"/>
 
+   </bean>-->
     <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
         <property name="maxIdle" value="${redis.maxIdle}"/>
         <property name="minIdle" value="${redis.minIdle}"/>
 
-        <!--以前是maxActive-->
+<!-- 以前是maxActive-->
         <property name="maxTotal" value="${redis.maxTotal}"/>
 
-        <!--以前是maxWait-->
+<!--以前是maxWait-->
         <property name="maxWaitMillis" value="${redis.maxWaitMillis}"/>
     </bean>
 

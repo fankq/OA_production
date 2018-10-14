@@ -15,6 +15,10 @@ import static ssm.util.HrmConstants.USERTABLE;
 @MyBatisDao
 public interface UserDao {
     //根据登录名和密码查询员工
+    @Select("SELECT * FROM " +USERTABLE +" WHERE LOGINNAME=#{loginname}")
+    UserInfo selectByLoginname(@Param("loginname") String loginname);
+
+    //根据登录名和密码查询员工
     @Select("SELECT * FROM " +USERTABLE +" WHERE LOGINNAME=#{loginname}" +
             "AND PASSWORD = #{password}")
     UserInfo selectByLoginnameAndPassword(@Param("loginname") String loginname, @Param("password") String password);

@@ -2,21 +2,34 @@ package ssm.controller;
 
 import fr.opensagres.xdocreport.document.json.JSONObject;
 import org.apache.log4j.Logger;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.session.mgt.SessionManager;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
+import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ssm.model.ResponseDto;
 import ssm.model.auto.UserInfo;
 import ssm.service.HrmService;
+import ssm.service.registry.TestRegistryService2;
 import ssm.util.HrmConstants;
 import ssm.util.PageModel;
 
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +39,12 @@ import java.util.Map;
  */
 @Controller
 public class UserController {
+
+//    @Autowired
+//    @Qualifier("testRegistryService2")
+//    private TestRegistryService2 service2;
+       @Autowired
+    private SessionDAO sessionDAO;
     private static Logger logger = Logger.getLogger(UserController.class);
     /**
      * 自动注入服务
@@ -35,21 +54,30 @@ public class UserController {
     private HrmService hrmService;
 
 
-    @RequestMapping(value="/default")
+    @RequestMapping(value="/")
     public String  defaultTemplate(){
         return "loginForm";
     }
 
 
-    @RequestMapping(value="/loginForm")
+    @GetMapping(value="/login")
     public String  loginForm(){
+
+        return "loginForm";
+    }
+    @GetMapping(value="/loginOut")
+    public String  loginOut(){
+        Subject user = SecurityUtils.getSubject();
+        System.out.print("###########  "+sessionDAO.getActiveSessions().size());
+        user.logout();
         return "loginForm";
     }
 
 
     @RequestMapping(value="/admin")
+    @RequiresPermissions("1111")
     public String  admin(){
-        return "admin";
+       return "admin";
     }
     /**
      *处理登陆请求
@@ -58,25 +86,33 @@ public class UserController {
      * @param session
      * @return  跳转的视图
      */
-    @RequestMapping(value="/login")
+    @PostMapping(value="/login")
     @ResponseBody
     public ResponseDto login(String loginname, String password , HttpSession session){
         logger.info(loginname+"用户尝试登录！");
         ResponseDto dto = new ResponseDto();
         //调用业务逻辑组件判断用户是否可以登录
-        UserInfo user = hrmService.login(loginname,password);
-        if(user!=null){
-            //将用户保存到session
-            session.setAttribute(HrmConstants.USER_SESSION,user);
-            //客户端跳转到main页面
-            dto.setFlag("success");
-            dto.setMessage("登陆成功！");
-            logger.info(loginname+"用户登录成功！");
-        }else{
-            dto.setMessage("登陆名和密码错误！请重新输入");
+        UsernamePasswordToken  token=  new UsernamePasswordToken(loginname, password);
+        token.setRememberMe(true);
+
+        Subject user = SecurityUtils.getSubject();
+        try {
+            user.login(token);
+        }catch(AuthenticationException e){
             dto.setFlag("error");
+            if (e instanceof UnknownAccountException) {
+               dto.setMessage( "用户不存在");
+            }  else {
+                dto.setMessage( "用户认证失败");
+            }
+            return dto;
         }
+        user.hasRole("edit");
+
+        dto.setFlag("success");
         return dto;
+
+
     }
     /**
      * 执行添加用户请求
@@ -91,6 +127,7 @@ public class UserController {
         boolean result;
         try {
             result= hrmService.addUser(user);
+
         }catch(Exception e ){
             dto.setMessage(e.getMessage());
             return dto ;
@@ -98,6 +135,7 @@ public class UserController {
         dto.setFlag(""+result);
         return dto;
     }
+
     /**
      *处理查询用户请求
      * @param pageIndex
@@ -161,9 +199,4 @@ public class UserController {
         }
         return dto;
     }
-
-
-
-
-
 }

@@ -1,5 +1,6 @@
 package ssm.model.auto;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
@@ -13,7 +14,7 @@ public class DocumentInfo implements Serializable {
     private String filename;
 
     private String remark;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createDate;
 
     private UserInfo user;

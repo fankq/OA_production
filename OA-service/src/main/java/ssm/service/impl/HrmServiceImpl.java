@@ -51,6 +51,13 @@ public class HrmServiceImpl implements HrmService {
 
     @Autowired
     private DocumentInfoMapper documentInfoDao;
+
+    @Transactional(readOnly =true)
+    @Override
+    public UserInfo findUserInfoByUsername(String loginname) {
+        return userDao.selectByLoginname(loginname);
+    }
+
     /**
      * @see {HrmService}
      * @param loginname
@@ -63,7 +70,6 @@ public class HrmServiceImpl implements HrmService {
 
         UserInfo userInfo = userDao.selectByLoginnameAndPassword(loginname,password);
         return userInfo;
-
     }
 
     /**
@@ -140,6 +146,7 @@ public class HrmServiceImpl implements HrmService {
 
         int i = userDao.update(user);
         if(i==1){
+
             return true;
         }else{
             return false;

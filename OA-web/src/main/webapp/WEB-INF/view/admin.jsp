@@ -11,6 +11,9 @@
                 <el-col :span="3" :offset="1">
                   <span style="color: #ffffff;" ><h1>O A 管 理 系 统</h1></span>
                 </el-col>
+                <el-col :span="3" :offset="1">
+                    <el-button  style="width:220px;margin:0px" :class="{ active: isActive}"  @click="loginOut">退出登陆</el-button>
+                </el-col>
             </el-row>
         </el-header>
         <el-container>
@@ -121,6 +124,7 @@
 <jsp:include  page="document/documentlist.jsp"/>
 
 <script type="text/javascript">
+    base = "${pageContext.request.contextPath}";
 
     const routes = [
         {
@@ -161,6 +165,10 @@
             isActive:false
         },
         methods:{
+            loginOut:function(){
+                window.location=base+'/loginOut';
+
+            },
             changeSize:function(){
                 if(this.isCollapse) this.isCollapse = false;
                 else this.isCollapse = true;
